@@ -214,7 +214,7 @@
 			<a href="wishlist.html" class="nav-link">
 				<i class="flaticon flaticon-sparkle"></i>
 			</a>
-			<a href="chat-list.html" class="nav-link">
+			<a href="{{route('front.likelist')}}" class="nav-link">
 				<i class="flaticon flaticon-chat-2"></i>
 			</a>
 			<a href="{{route('front.profile')}}" class="nav-link active">

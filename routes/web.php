@@ -1,11 +1,13 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\LikeController;
 use App\Http\Controllers\FrontController;
 use App\Http\Controllers\OwnerController;
 use App\Http\Controllers\PaketController;
 use App\Http\Controllers\MemberController;
 use App\Http\Controllers\HomelistController;
+use App\Http\Controllers\LikelistController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Member_paketController;
@@ -63,7 +65,11 @@ Route::middleware(['auth', 'verified', 'role:member'])->group(function () {
     Route::get('/profile', [FrontController::class, 'profile'])->name('front.profile');
     Route::put('/profile', [FrontController::class, 'updateProfile'])->name('front.profile.update'); // submit
     Route::get('/homelist', [HomelistController::class, 'homelist'])->name('front.homelist');
-    
+
+    Route::post('/like/{id}', [LikeController::class, 'like'])->name('like.like');
+    Route::post('/dislike/{id}', [LikeController::class, 'dislike'])->name('like.dislike');
+    Route::get('/likelist', [LikelistController::class, 'index'])->name('front.likelist');
+    Route::get('/likedetail/{id}', [LikelistController::class, 'likedetail'])->name('front.likedetail');
 
 });
 
