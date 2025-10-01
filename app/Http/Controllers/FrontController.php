@@ -12,9 +12,11 @@ use Midtrans\Notification;
 use Illuminate\Support\Str;
 use App\Models\Member_paket;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rule;
 use Illuminate\Auth\Events\Registered;
 
 class FrontController extends Controller
@@ -67,7 +69,95 @@ class FrontController extends Controller
 
     public function profile()
     {
-        return view('front.views.profile');
+        $user   = Auth::user();
+        $member = $user->member;
+
+        $age = null;
+        if ($member && $member->tanggal_lahir) {
+            $age = Carbon::parse($member->tanggal_lahir)->age;
+        }
+        // daftar field yang dianggap wajib untuk progress
+        $fields = [
+            $user->name,
+            $user->email,
+            $member->tempat_lahir ?? null,
+            $member->tanggal_lahir ?? null,
+            $member->kelamin ?? null,
+            $member->no_hp ?? null,
+            $member->tempat_tinggal ?? null,
+            $member->pendidikan ?? null,
+            $member->karakter ?? null,
+            $member->karakter_pasangan ?? null,
+            $member->hafalan_surat ?? null,
+        ];
+
+        $totalFields = count($fields);
+        $filledFields = collect($fields)->filter(fn($val) => !empty($val))->count();
+
+        $percentage = $totalFields > 0 ? round(($filledFields / $totalFields) * 100) : 0;
+
+        return view('front.views.profile', compact('member','user','percentage','age'));
+    }
+
+
+
+    public function updateProfile(Request $request)
+    {
+        // dd($request->all());
+
+        $user   = Auth::user();
+        $member = $user->member ?? $user->member()->create(['kelamin' => 'pria', 'is_active' => '1']);
+
+        // VALIDASI
+        $validatedMember = $request->validate([
+            'tempat_lahir'      => 'nullable|string|max:255',
+            'tanggal_lahir'     => 'nullable|date',
+            'kelamin'           => 'required|in:pria,wanita',
+            'no_hp'             => 'nullable|string|max:255',
+            'tempat_tinggal'    => 'nullable|string|max:255',
+            'pendidikan'        => 'nullable|string|max:255',
+            'karakter'          => 'nullable|string|max:255',
+            'karakter_pasangan' => 'nullable|string|max:255',
+            'hafalan_surat'     => 'nullable|string|max:255',
+        ]);
+
+        // Validasi user (email & password)
+        $validatedUser = $request->validate([
+            'name'     => ['required','string','max:255'],
+            'email'    => ['required','email', Rule::unique('users','email')->ignore($user->id)],
+            'password' => ['nullable','string','min:8','confirmed'], // butuh field password_confirmation
+            // 'current_password' => ['required_with:password','current_password'], // opsional keamanan ekstra
+        ]);
+
+        DB::beginTransaction();
+        try {
+            // Update member
+            $member->update($validatedMember);
+
+            // (Opsional) sinkron avatar saat kelamin berubah
+            $expectedAvatar = $validatedMember['kelamin'] === 'pria'
+                ? 'avatars/listman.jpg'
+                : 'avatars/listwoman.jpg';
+
+            $user->name   = $validatedUser['name']; // <--- tambahkan
+            $user->email  = $validatedUser['email'];
+            $user->avatar = $expectedAvatar;
+
+            if (!empty($validatedUser['password'])) {
+                $user->password = Hash::make($validatedUser['password']);
+            }
+
+            $user->save();
+
+            DB::commit();
+
+            return back()->with('success', 'Profil berhasil diperbarui.');
+
+        } catch (\Throwable $e) {
+            DB::rollBack();
+            return back()->withErrors(['general' => 'Gagal memperbarui profil: '.$e->getMessage()])
+                        ->withInput();
+        }
     }
 
     public function homelist()

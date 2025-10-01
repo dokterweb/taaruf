@@ -88,41 +88,110 @@
 						</a>
 						<div class="media rounded-circle">
 							<img src="{{asset('assets')}}/images/user/pria.jpg" alt="profile-image">
-							<svg class="radial-progress m-b20" data-percentage="40" viewBox="0 0 80 80">
+							<svg class="radial-progress m-b20" data-percentage="{{ $percentage }}" viewBox="0 0 80 80">
 								<circle class="incomplete" cx="40" cy="40" r="35"></circle>
 								<circle class="complete" cx="40" cy="40" r="35" style="stroke-dashoffset: 39.58406743523136;"></circle>
 							</svg>
-							<div class="data-fill style-2"><span>40% Complete</span></div>
+							<div class="data-fill style-2"><span>{{ $percentage }}% Complete</span></div>
 						</div>
 						<a href="edit-profile.html" class="edit-profile dz-icon">
 							<i class="flaticon flaticon-pencil-2"></i>
 						</a>
 					</div>
 					<div class="profile-detail">
-						<h4 class="name">Alena, 22</h4>
-						<p class="mb-0"><i class="icon feather icon-map-pin me-1"></i> Mentreal, Canada</p>
+						<h4 class="name">{{ $user->name }}{{ $age ? ', ' . $age : '' }}</h4>
+						<p class="mb-0"><i class="icon feather icon-map-pin me-1"></i>  {{$member->tempat_tinggal ?? 'Tidak ada data'}}</p>
 					</div>
 				</div>
+				@if ($errors->any())
+				<div class="alert alert-danger">
+					<ul class="mb-0">
+					@foreach ($errors->all() as $error)
+						<li>{{ $error }}</li>
+					@endforeach
+					</ul>
+				</div>
+				@endif
+
+				@if (session('success'))
+				<div class="alert alert-success alert-dismissible fade show" role="alert" id="flash-message">
+					{{ session('success') }}
+				</div>
+				@endif
+				@if (session('error'))
+				<div class="alert alert-danger alert-dismissible fade show" role="alert" id="flash-message">
+					{{ session('error') }}
+				</div>
+				@endif
 				<div class="row g-2 mb-5">
 					<div class="col-12">
 						<div class="card">
 							<div class="card-header">
-								<h5 class="card-title">Classic Input</h5>
+								<h5 class="card-title">Edit Profile</h5>
 							</div>
 							<div class="card-body">
-								<div class="mb-2">
-									<input type="text" class="form-control" placeholder="Enter Username">								
-								</div>
-								<div class="mb-2">
-									<input type="email" class="form-control" placeholder="Enter Email">
-								</div>
-								<div class="mb-2 input-group input-group-icon">
-									<input type="password" id="password" class="form-control dz-password" placeholder="Type Password Here">
-									<span class="input-group-text show-pass"> 
-										<i class="icon feather icon-eye-off eye-close"></i>
-										<i class="icon feather icon-eye eye-open"></i>
-									</span>
-								</div>
+								<form method="POST" action="{{ route('front.profile.update') }}">
+									@csrf
+									@method('PUT')
+									<div class="mb-2">
+										<input type="text" name="name" class="form-control"
+											   value="{{ old('name', $member->user->name) }}" placeholder="Nama Lengkap">
+									</div>
+									<div class="mb-2">
+										<input type="text" name="tempat_lahir" class="form-control"
+										value="{{ old('tempat_lahir', $member->tempat_lahir ?? '') }}">
+									</div>
+									<div class="mb-2">
+										<input type="date" name="tanggal_lahir" class="form-control"
+										value="{{ old('tanggal_lahir', $member->tanggal_lahir ?? '') }}">
+									</div>
+									<div class="mb-2">
+										<select name="kelamin" class="form-select" required>
+											@php $kel = old('kelamin', $member->kelamin ?? 'pria'); @endphp
+											<option value="pria"   {{ $kel === 'pria' ? 'selected' : '' }}>Pria</option>
+											<option value="wanita" {{ $kel === 'wanita' ? 'selected' : '' }}>Wanita</option>
+										</select>
+									</div>
+									<div class="mb-2">
+										<input type="text" name="no_hp" class="form-control"
+										value="{{ old('no_hp', $member->no_hp ?? '') }}">
+									</div>
+									<div class="mb-2">
+										<input type="text" name="tempat_tinggal" class="form-control"
+										value="{{ old('tempat_tinggal', $member->tempat_tinggal ?? '') }}" placeholder="Tempat Tinggal">
+									</div>
+									<div class="mb-2">
+										<input type="text" name="pendidikan" class="form-control"
+										value="{{ old('pendidikan', $member->pendidikan ?? '') }}" placeholder="pendidikan">
+									</div>
+									<div class="mb-2">
+										<input type="text" name="hafalan_surat" class="form-control"
+										value="{{ old('hafalan_surat', $member->hafalan_surat ?? '') }}"  placeholder="hafalan_surat">
+									</div>
+									<div class="mb-2">
+										<input type="text" name="karakter" class="form-control"
+										value="{{ old('karakter', $member->karakter ?? '') }}" placeholder="karakter">
+									</div>
+									<div class="mb-2">
+										<input type="text" name="karakter_pasangan" class="form-control"
+										value="{{ old('karakter_pasangan', $member->karakter_pasangan ?? '') }}" placeholder="karakter_pasangan">
+									</div>
+									<div class="mb-2">
+										<input type="email" name="email" class="form-control" value="{{ $member->user->email }}">
+									</div>
+									<div class="mb-2 input-group input-group-icon">
+										<input type="password" name="password" class="form-control dz-password">
+										<span class="input-group-text show-pass"> 
+											<i class="icon feather icon-eye-off eye-close"></i>
+											<i class="icon feather icon-eye eye-open"></i>
+										</span>
+									</div>
+									<div class="mb-2">
+										<input type="password" name="password_confirmation" class="form-control"
+										placeholder="Konfirmasi password baru (opsional)">
+									</div>
+									<button type="submit" class="btn btn-gradient mb-3 btn-block rounded-xl">Update</button>
+								</form>
 							</div>
 						</div>
 					</div>
@@ -165,5 +234,15 @@
 <script src="{{asset('assets')}}/js/dz.carousel.js"></script><!-- Swiper -->
 <script src="{{asset('assets')}}/js/settings.js"></script>
 <script src="{{asset('assets')}}/js/custom.js"></script>
+<script>
+    // hilangkan notif setelah 5 detik
+    setTimeout(() => {
+        let el = document.getElementById('flash-message');
+        if(el){
+            el.classList.remove('show');
+            el.classList.add('fade');
+        }
+    }, 5000);
+</script>
 </body>
 </html>

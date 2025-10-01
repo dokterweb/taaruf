@@ -35,7 +35,34 @@
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:opsz,wght@6..12,200;6..12,300;6..12,400;6..12,500;6..12,600;6..12,700;6..12,800;6..12,900;6..12,1000&family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+	.dz-content {
+    position: relative; /* supaya anaknya bisa absolute */
+}
 
+.dz-content .dz-icon-box {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%); /* ini bikin rata tengah horizontal */
+    bottom: 60px; /* geser naik: makin besar nilainya, makin ke atas */
+    display: flex;
+    gap: 20px; /* jarak antar tombol */
+    z-index: 20;
+}
+
+.dz-content .dz-icon-box .icon {
+    background: #fff;
+    border-radius: 50%;
+    width: 55px;
+    height: 55px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    font-size: 22px;
+    color: #333;
+}
+</style>
 </head>   
 <body class="bg-white overflow-hidden header-large" data-theme-color="color-primary-2">
 <div class="page-wrapper">
@@ -78,134 +105,59 @@
 	<div class="page-content space-top p-b65">
 		<div class="container fixed-full-area">
 			<div class="dzSwipe_card-cont dz-gallery-slider">
-				<div class="dzSwipe_card">
+
+				@forelse($cards as $m)
+					@php
+					$avatar = asset($m->user->avatar);
+					$name   = $m->user?->name ?? 'User';
+					$age    = $m->tanggal_lahir ? \Carbon\Carbon::parse($m->tanggal_lahir)->age : null;
+					$ttl    = $m->tempat_tinggal ?: '-';
+					@endphp
+
+					<div class="dzSwipe_card mb-3">
 					<div class="dz-media">
-						<img src="{{asset('assets')}}/images/slider/listwomen.jpg" alt="">
+						<img src="{{ $avatar }}" alt="avatar">
 					</div>
-					<div class="dz-content">
-						<div class="left-content">
-							<span class="badge badge-primary d-inline-flex gap-1 mb-2"><i class="icon feather icon-map-pin"></i>Nearby</span>
-							<h4 class="title"><a href="profile-detail.html">Harleen , 24</a></h4>
-							<p class="mb-0"><i class="icon feather icon-map-pin"></i> 3 miles away</p>
-						</div>
-						<a href="javascript:void(0);" class="dz-icon dz-sp-like"><i class="flaticon flaticon-star-1"></i></a>
-					</div>
-					<div class="dzSwipe_card__option dzReject">
-						<i class="fa-solid fa-xmark"></i>
-					</div>
-					<div class="dzSwipe_card__option dzLike">
-						<i class="fa-solid fa-check"></i>
-					</div>
-					<div class="dzSwipe_card__option dzSuperlike">
-						<h5 class="title mb-0">Super Like</h5>
-					</div>
-					<div class="dzSwipe_card__drag"></div>
-				</div>
 				
-				<div class="dzSwipe_card">
-					<div class="dz-media">
-						<img src="{{asset('assets')}}/images/slider/listman.jpg" alt="">
-					</div>
 					<div class="dz-content">
 						<div class="left-content">
-							<span class="badge badge-primary d-inline-flex gap-1 mb-2"><i class="icon feather icon-map-pin"></i>Nearby</span>
-							<h4 class="title"><a href="profile-detail.html">Richard , 21</a></h4>
-							<p class="mb-0"><i class="icon feather icon-map-pin"></i> 5 miles away</p>
+						{{-- contoh badge opsional --}}
+						<span class="badge badge-primary d-inline-flex gap-1 mb-2">
+							<i class="icon feather icon-map-pin"></i>Same Package
+						</span>
+
+						<h4 class="title">
+							<a href="{{ route('front.profile') }}"> {{-- ganti ke route detail jika ada --}}
+							{{ $name }}{{ $age ? ', '.$age : '' }}
+							</a>
+						</h4>
+
+						<p class="mb-0">
+							<i class="icon feather icon-map-pin"></i>
+							{{ $ttl }}
+						</p>
+						</div>
+						<div class="dz-icon-box">
+							<a href="home.html" class="icon dz-flex-box dislike"><i class="flaticon flaticon-cross font-18"></i></a>
+							<a href="home.html" class="icon dz-flex-box super-like"><i class="fa-solid fa-star"></i></a>
+							<a href="wishlist.html" class="icon dz-flex-box like"><i class="fa-solid fa-heart"></i></a>
 						</div>
 						<a href="javascript:void(0);" class="dz-icon dz-sp-like"><i class="flaticon flaticon-star-1"></i></a>
+						
 					</div>
-					<div class="dzSwipe_card__option dzReject">
-						<i class="fa-solid fa-xmark"></i>
-					</div>
-					<div class="dzSwipe_card__option dzLike">
-						<i class="fa-solid fa-check"></i>
-					</div>
-					<div class="dzSwipe_card__option dzSuperlike">
-						<h5 class="title mb-0">Super Like</h5>
-					</div>
+
+					<div class="dzSwipe_card__option dzReject"><i class="fa-solid fa-xmark"></i></div>
+					<div class="dzSwipe_card__option dzLike"><i class="fa-solid fa-check"></i></div>
+					<div class="dzSwipe_card__option dzSuperlike"><h5 class="title mb-0">Super Like</h5></div>
 					<div class="dzSwipe_card__drag"></div>
-				</div>
+					</div>
+				@empty
+					<p class="text-muted">Belum ada member lain dengan paket yang sama.</p>
+				@endforelse
 				
-				<div class="dzSwipe_card">
-					<div class="dz-media">
-						<img src="{{asset('assets')}}/images/slider/listwomen.jpg" alt="">
-					</div>
-					<div class="dz-content">
-						<div class="left-content">
-							<h4 class="title"><a href="profile-detail.html">Natasha , 22</a></h4>
-							<p class="mb-0"><i class="icon feather icon-map-pin"></i> 2 miles away</p>
-						</div>
-						<a href="javascript:void(0);" class="dz-icon dz-sp-like"><i class="flaticon flaticon-star-1"></i></a>
-					</div>
-					<div class="dzSwipe_card__option dzReject">
-						<i class="fa-solid fa-xmark"></i>
-					</div>
-					<div class="dzSwipe_card__option dzLike">
-						<i class="fa-solid fa-check"></i>
-					</div>
-					<div class="dzSwipe_card__option dzSuperlike">
-						<h5 class="title mb-0">Super Like</h5>
-					</div>
-					<div class="dzSwipe_card__drag"></div>
-				</div>
-				
-				<div class="dzSwipe_card">
-					<div class="dz-media">
-						<img src="{{asset('assets')}}/images/slider/listman.jpg" alt="">
-					</div>
-					<div class="dz-content">
-						<div class="left-content">
-							<h4 class="title"><a href="profile-detail.html">Lisa Ray , 25</a></h4>
-							<ul class="intrest">
-								<li><span class="badge">Photography</span></li>
-								<li><span class="badge">Street Food</span></li>
-								<li><span class="badge">Foodie Tour</span></li>
-							</ul>
-						</div>
-						<a href="javascript:void(0);" class="dz-icon dz-sp-like"><i class="flaticon flaticon-star-1"></i></a>
-					</div>
-					<div class="dzSwipe_card__option dzReject">
-						<i class="fa-solid fa-xmark"></i>
-					</div>
-					<div class="dzSwipe_card__option dzLike">
-						<i class="fa-solid fa-check"></i>
-					</div>
-					<div class="dzSwipe_card__option dzSuperlike">
-						<h5 class="title mb-0">Super Like</h5>
-					</div>
-					<div class="dzSwipe_card__drag"></div>
-				</div>
-				
-				<div class="dzSwipe_card">
-					<div class="dz-media">
-						<img src="{{asset('assets')}}/images/slider/listwomen.jpg" alt="">
-					</div>
-					<div class="dz-content">
-						<div class="left-content">
-							<span class="badge badge-primary mb-2">New here</span>
-							<h4 class="title"><a href="profile-detail.html">Richard , 22</a></h4>
-							<ul class="intrest">
-								<li><span class="badge intrest">Climbing</span></li>
-								<li><span class="badge intrest">Skincare</span></li>
-								<li><span class="badge intrest">Dancing</span></li>
-								<li><span class="badge intrest">Gymnastics</span></li>
-							</ul>							
-						</div>
-						<a href="javascript:void(0);" class="dz-icon dz-sp-like"><i class="flaticon flaticon-star-1"></i></a>
-					</div>
-					<div class="dzSwipe_card__option dzReject">
-						<i class="fa-solid fa-xmark"></i>
-					</div>
-					<div class="dzSwipe_card__option dzLike">
-						<i class="fa-solid fa-check"></i>
-					</div>
-					<div class="dzSwipe_card__option dzSuperlike">
-						<h5 class="title mb-0">Super Like</h5>
-					</div>
-					<div class="dzSwipe_card__drag"></div>
-				</div>
 			</div>
 		</div>
+		
 	</div>
 	<!-- Page Content End -->
 	

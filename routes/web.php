@@ -5,6 +5,7 @@ use App\Http\Controllers\FrontController;
 use App\Http\Controllers\OwnerController;
 use App\Http\Controllers\PaketController;
 use App\Http\Controllers\MemberController;
+use App\Http\Controllers\HomelistController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Member_paketController;
@@ -60,7 +61,8 @@ Route::post('/email/verification-notification', function (Illuminate\Http\Reques
 Route::middleware(['auth', 'verified', 'role:member'])->group(function () {
     Route::get('/home', [FrontController::class, 'index'])->name('front.home');
     Route::get('/profile', [FrontController::class, 'profile'])->name('front.profile');
-    Route::get('/homelist', [FrontController::class, 'homelist'])->name('front.homelist');
+    Route::put('/profile', [FrontController::class, 'updateProfile'])->name('front.profile.update'); // submit
+    Route::get('/homelist', [HomelistController::class, 'homelist'])->name('front.homelist');
     
 
 });
