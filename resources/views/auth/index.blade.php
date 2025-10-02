@@ -28,17 +28,20 @@
 			<div class="welcome-inner flex-column">
 				<div class="logo-area">
 					<img class="logo" src="{{asset('assets')}}/images/logowhitenew.png" alt="">
+					<p class="para-title">Media Platform Ta'aruf Exlusive para Profesional dan Akademisi<br>
+						Ikhtiar menemukan Jodoh Sekufu untuk menuju Pernikahan</p>
 				</div>
-				@if ($errors->any())
-					<div class="alert alert-danger">
-						<ul>
-							@foreach ($errors->all() as $error)
-								<li>{{ $error }}</li>
-							@endforeach
-						</ul>
-					</div>
-				@endif
+				
 				<div class="social-area">
+					@if ($errors->any())
+						<div class="alert alert-danger">
+							<ul>
+								@foreach ($errors->all() as $error)
+									<li>{{ $error }}</li>
+								@endforeach
+							</ul>
+						</div>
+					@endif
 					<form action="{{route('login')}}" method="post">
 						@csrf
 						<div class="card">

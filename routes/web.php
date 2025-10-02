@@ -70,6 +70,7 @@ Route::middleware(['auth', 'verified', 'role:member'])->group(function () {
     Route::post('/dislike/{id}', [LikeController::class, 'dislike'])->name('like.dislike');
     Route::get('/likelist', [LikelistController::class, 'index'])->name('front.likelist');
     Route::get('/likedetail/{id}', [LikelistController::class, 'likedetail'])->name('front.likedetail');
+    Route::post('/dislike_detail/{id}', [LikelistController::class, 'dislike_detail'])->name('like.dislike_detail');
 
 });
 

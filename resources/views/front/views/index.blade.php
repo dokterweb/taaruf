@@ -92,16 +92,16 @@
 			<a href="{{route('front.homelist')}}" class="nav-link">
 				<i class="fa-solid fa-house"></i>
 			</a>
-			<a href="{{route('front.home')}}" class="nav-link active">
+			<a href="{{route('front.home')}}" class="nav-link">
 				<i class="flaticon flaticon-magnifying-glass"></i>
 			</a>
 			<a href="wishlist.html" class="nav-link">
 				<i class="flaticon flaticon-sparkle"></i>
 			</a>
-			<a href="chat-list.html" class="nav-link">
+			<a href="{{route('front.likelist')}}" class="nav-link">
 				<i class="flaticon flaticon-chat-2"></i>
 			</a>
-			<a href="{{route('front.profile')}}" class="nav-link">
+			<a href="{{route('front.profile')}}" class="nav-link active">
 				<i class="fa-solid fa-user"></i>
 			</a>
 		</div>
