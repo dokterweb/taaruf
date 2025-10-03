@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Auth;
 
 class HomelistController extends Controller
 {
-    public function homelist()
+   /*  public function homelist()
     {
         $user   = Auth::user();
         $member = $user->member;
@@ -52,5 +52,50 @@ class HomelistController extends Controller
             ->simplePaginate(12); // pagination opsional
 
         return view('front.views.homelist', compact('cards','myPaketId'));
+    } */
+
+    public function homelist()
+    {
+        $user   = Auth::user();
+        $member = $user->member;
+
+        // Kalau belum ada data member sama sekali
+        if (!$member) {
+            return redirect()->route('front.home')
+                ->with('error', 'Profil member belum lengkap. Silakan lengkapi profil terlebih dahulu.');
+        }
+
+        // Ambil paket_id aktif user ini (prioritaskan status paid, fallback ke pending terbaru)
+        $myPaketRow = Member_paket::where('member_id', $member->id)
+            ->orderByRaw("CASE WHEN status='paid' THEN 1 WHEN status='pending' THEN 2 ELSE 3 END")
+            ->orderByDesc('id')
+            ->first();
+
+        // Jika member belum punya paket sama sekali
+        if (!$myPaketRow) {
+            return redirect()->route('front.home')
+                ->with('error', 'Untuk mengakses menu home anda harus membeli paket member.');
+        }
+
+        $myPaketId = $myPaketRow->paket_id;
+
+        // Ambil daftar member_id lain yang punya paket yang sama
+        $memberIds = Member_paket::where('paket_id', $myPaketId)
+            ->where('member_id', '!=', $member->id)   // exclude diri sendiri
+            ->pluck('member_id')
+            ->unique();
+
+        // tentukan kelamin lawan
+        $targetKelamin = $member->kelamin === 'pria' ? 'wanita' : 'pria';
+
+        // Ambil profil mereka + user (avatar, name) sekaligus (eager load)
+        $cards = Member::with('user')
+            ->whereIn('id', $memberIds)
+            ->where('kelamin', $targetKelamin) // filter lawan jenis
+            ->orderByDesc('updated_at')
+            ->simplePaginate(12); // pagination opsional
+
+        return view('front.views.homelist', compact('cards','myPaketId'));
     }
+
 }

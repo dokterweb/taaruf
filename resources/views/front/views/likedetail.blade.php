@@ -10,6 +10,8 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, minimal-ui, viewport-fit=cover">
 	<meta name="theme-color" content="#FF50A2">
+	<meta name="robots" content="index, follow"> 
+	<meta name="format-detection" content="telephone=no">
 
 	<!-- Favicons Icon -->
 	<link rel="shortcut icon" type="image/x-icon" href="{{asset('assets')}}/images/favicon.png">

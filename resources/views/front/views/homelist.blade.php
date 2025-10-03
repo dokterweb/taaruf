@@ -10,7 +10,9 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, minimal-ui, viewport-fit=cover">
 	<meta name="theme-color" content="#FF50A2">
-
+	<meta name="robots" content="index, follow"> 
+	<meta name="format-detection" content="telephone=no">
+	
 	<!-- Favicons Icon -->
 	<link rel="shortcut icon" type="image/x-icon" href="{{asset('assets')}}/images/favicon.png">
     
@@ -96,6 +98,34 @@
 	<!-- Page Content Start -->
 	<div class="page-content space-top p-b65">
 		<div class="container fixed-full-area">
+
+			@if(session('matched_name'))
+				<div class="alert alert-success solid alert-dismissible fade show">
+					<svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="me-2">
+						<circle cx="12" cy="12" r="10"></circle>
+						<path d="M16 12l-4-4-4 4"></path>
+					</svg>
+					<strong>Selamat!</strong> Anda dan <strong>{{ session('matched_name') }}</strong> saling menyukai. Kalian telah <strong>Match!</strong>
+					<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="btn-close">
+						<span><i class="icon feather icon-x"></i></span>
+					</button>
+				</div>
+			@endif
+
+			@if(session('success') && session('liked_name'))
+				<div class="alert alert-info solid alert-dismissible fade show">
+					<svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="me-2">
+						<circle cx="12" cy="12" r="10"></circle>
+						<line x1="12" y1="16" x2="12" y2="12"></line>
+						<line x1="12" y1="8" x2="12.01" y2="8"></line>
+					</svg>
+					<strong>Info!</strong> Anda sudah like <strong>{{ session('liked_name') }}</strong>
+					<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="btn-close">
+						<span><i class="icon feather icon-x"></i></span>
+					</button>
+				</div>
+			@endif
+			
 			<div class="dzSwipe_card-cont dz-gallery-slider">
 
 				@forelse($cards as $m)
@@ -201,5 +231,16 @@
 <script src="{{asset('assets')}}/js/dz.carousel.js"></script><!-- Swiper -->
 <script src="{{asset('assets')}}/js/settings.js"></script>
 <script src="{{asset('assets')}}/js/custom.js"></script>
+<script>
+	setTimeout(() => {
+		document.querySelectorAll('.alert-dismissible').forEach(el => {
+			el.style.transition = 'opacity 0.5s ease';
+			el.style.opacity = '0';
+			setTimeout(() => el.remove(), 500);
+		});
+	}, 5000);
+</script>
+
+
 </body>
 </html>

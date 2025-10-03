@@ -9,13 +9,7 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, minimal-ui, viewport-fit=cover">
 	<meta name="theme-color" content="#FF50A2">
-	<meta name="author" content="DexignZone">
 	<meta name="robots" content="index, follow"> 
-	<meta name="keywords" content="android, ios, mobile, application template, progressive web app, ui kit, multiple color, dark layout, match, partner, perfect match, dating app, dating, couples, dating kit, mobile app">
-	<meta name="description" content="Transform your dating app vision into reality with our 'Dating Kit' - a powerful Bootstrap template for mobile dating applications. Seamlessly integrate captivating features, stylish UI components, and user-friendly functionality. Launch your dating app efficiently and elegantly using the Dating Kit template.">
-	<meta property="og:title" content="Dating Kit - Dating Mobile App Template ( Bootstrap + PWA )">
-	<meta property="og:description" content="Transform your dating app vision into reality with our 'Dating Kit' - a powerful Bootstrap template for mobile dating applications. Seamlessly integrate captivating features, stylish UI components, and user-friendly functionality. Launch your dating app efficiently and elegantly using the Dating Kit template.">
-	<meta property="og:image" content="https://datingkit.dexignzone.com/xhtml/social-image.png">
 	<meta name="format-detection" content="telephone=no">
 
 	<!-- Favicons Icon -->

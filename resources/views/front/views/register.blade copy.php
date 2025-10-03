@@ -2,8 +2,7 @@
 <html lang="en">
 <head>
 	<!-- Title -->
-	<title>TaarufLand Login</title>
-
+	<title>TaarufLand Register</title>
 	<!-- Meta -->
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, minimal-ui, viewport-fit=cover">
@@ -13,7 +12,8 @@
 
 	<!-- Favicons Icon -->
 	<link rel="shortcut icon" type="image/x-icon" href="{{asset('assets')}}/images/favicon.png">
-    <!-- Stylesheets -->
+    
+	<!-- Stylesheets -->
     <link rel="stylesheet" class="main-css" type="text/css" href="{{asset('assets')}}/css/style.css">
 	<!-- Google Fonts -->
 	<link rel="preconnect" href="https://fonts.googleapis.com">
@@ -34,43 +34,46 @@
 	<div class="content-body">
 		<div class="welcome-area">
 			<div class="welcome-inner flex-column">
-				<div class="logo-area">
-					<img class="logo" src="{{asset('assets')}}/images/logowhitenew.png" alt="">
-					<p class="para-title">Media Platform Ta'aruf Exlusive para Profesional dan Akademisi<br>
-						Ikhtiar menemukan Jodoh Sekufu untuk menuju Pernikahan</p>
-				</div>
-				
+				@if ($errors->any())
+					<div class="alert alert-danger">
+						<ul>
+							@foreach ($errors->all() as $error)
+								<li>{{ $error }}</li>
+							@endforeach
+						</ul>
+					</div>
+				@endif
 				<div class="social-area">
-					@if ($errors->any())
-						<div class="alert alert-danger">
-							<ul>
-								@foreach ($errors->all() as $error)
-									<li>{{ $error }}</li>
-								@endforeach
-							</ul>
-						</div>
-					@endif
-					<form action="{{route('login')}}" method="post">
+					<form action="{{route('front.createMember')}}" method="post">
 						@csrf
 						<div class="card">
 							<div class="card-header">
-								<h5 class="card-title">Sign In</h5>
+								<h5 class="card-title">Register</h5>
 							</div>
 							<div class="card-body">
-								<div class="mb-2 input-group input-group-icon">
-									<span class="input-group-text">
-										<div class="input-icon">
-											<i class="icon feather icon-mail"></i>
-										</div>
-									</span>
+								<div class="mb-2">
+									<input type="text" name="name" class="form-control" placeholder="Full Name">
+								</div>
+								<div class="mb-2">
+									<select name="kelamin" class="form-control">
+										<option selected>Gender</option>
+										<option value="pria">Male</option>
+										<option value="wanita">Female</option>
+									</select>
+								</div>
+								<div class="mb-2">
+									<input type="number" name="no_hp" class="form-control" placeholder="Handphone No">
+								</div>
+								<div class="mb-2">
+									<input type="text" name="tempat_lahir" class="form-control" placeholder="Tempat Lahir">
+								</div>
+								<div class="mb-2">
+									<input type="date" name="tanggal_lahir" class="form-control">
+								</div>
+								<div class="mb-2">
 									<input type="email" name="email" class="form-control" placeholder="Enter Email">
 								</div>
 								<div class="mb-2 input-group input-group-icon">
-									<span class="input-group-text">
-										<div class="input-icon">
-											<i class="icon feather icon-lock"></i>
-										</div>
-									</span>
 									<input type="password" name="password" id="password" class="form-control dz-password" placeholder="Type Password Here">
 									<span class="input-group-text show-pass"> 
 										<i class="icon feather icon-eye-off eye-close"></i>
@@ -79,10 +82,8 @@
 								</div>
 							</div>
 						</div>
-						<button type="submit" class="btn btn-icon-outline btn-white w-100">Sign In</button>
+						<button type="submit" class="btn btn-icon-outline btn-white w-100">Create</button>
 					</form>
-					
-					<a href="{{route('register')}}"><h5 style="color: white;">Create New Account</h5></a>
 				</div>
 			</div>
 		</div>

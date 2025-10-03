@@ -3,6 +3,13 @@
 <head>
 	<!-- Title -->
 	<title>Pembayaran Paket</title>
+    <!-- Meta -->
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, minimal-ui, viewport-fit=cover">
+	<meta name="theme-color" content="#FF50A2">
+	<meta name="robots" content="index, follow"> 
+	<meta name="format-detection" content="telephone=no">
+
 	<!-- Favicons Icon -->
 	<link rel="shortcut icon" type="image/x-icon" href="{{asset('assets')}}/images/favicon.png">
     <!-- Stylesheets -->
@@ -45,15 +52,15 @@
 				</div>
 				<div class="card-body">
 					<div class="dz-box gold">
-                    <h1>Checkout untuk Paket: {{ $paket->nama_paket }}</h1>
-					</div>
-                    <form id="pay-form">
-                        <input type="number" name="amount" value="{{ $paket->biaya }}" min="1000" readonly />
-                        <button type="submit" class="btn btn-sm btn-dark rounded-xl" id="pay-button">
-								BAYAR SEKARANG
-                        </button>
-                    </form>
-
+                        <h6>Checkout untuk Paket: {{ $paket->nama_paket }}</h6>
+                        
+                        <form id="pay-form">
+                            <input type="number" name="amount" value="{{ $paket->biaya }}" min="1000" readonly />
+                            <button type="submit" class="btn btn-sm btn-dark rounded-xl" id="pay-button">
+                                    BAYAR SEKARANG
+                            </button>
+                        </form>
+                    </div>
 				</div>
 			</div>
 		</div> 

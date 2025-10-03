@@ -3,6 +3,11 @@
 <head>
 	<!-- Title -->
 	<title>TaarufLand Register</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, minimal-ui, viewport-fit=cover">
+	<meta name="theme-color" content="#FF50A2">
+	<meta name="robots" content="index, follow"> 
+	<meta name="format-detection" content="telephone=no">
 	<!-- Favicons Icon -->
 	<link rel="shortcut icon" type="image/x-icon" href="{{asset('assets')}}/images/favicon.png">
     <!-- Stylesheets -->
@@ -26,6 +31,9 @@
 	<div class="content-body">
 		<div class="welcome-area">
 			<div class="welcome-inner flex-column">
+				<div class="logo-area">
+					<img class="logo" src="{{asset('assets')}}/images/logowhitenew.png" alt="">
+				</div>
 				@if ($errors->any())
 					<div class="alert alert-danger">
 						<ul>
@@ -76,6 +84,7 @@
 						</div>
 						<button type="submit" class="btn btn-icon-outline btn-white w-100">Create</button>
 					</form>
+					<a href="{{route('login')}}"><h5 style="color: white;">Sign In</h5></a>
 				</div>
 			</div>
 		</div>

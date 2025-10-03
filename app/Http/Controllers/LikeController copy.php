@@ -45,10 +45,6 @@ class LikeController extends Controller
 
                 // Kirim notifikasi match ke kedua member
                 Notification::send([$me->user, $target->user], new NewMatch($me, $target));
-                return back()->with([
-                    'success' => 'Match berhasil!',
-                    'matched_name' => $target->user->name
-                ]);
             } else {
                 // Kirim notifikasi ke target "You got a like"
                 $target->user->notify(new GotLiked($me));

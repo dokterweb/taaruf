@@ -2,7 +2,15 @@
 <html lang="en">
 <head>
 	<!-- Title -->
-	<title>TaarufLand Register</title>
+	<title>TaarufLand Login</title>
+
+	<!-- Meta -->
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, minimal-ui, viewport-fit=cover">
+	<meta name="theme-color" content="#FF50A2">
+	<meta name="robots" content="index, follow"> 
+	<meta name="format-detection" content="telephone=no">
+
 	<!-- Favicons Icon -->
 	<link rel="shortcut icon" type="image/x-icon" href="{{asset('assets')}}/images/favicon.png">
     <!-- Stylesheets -->
@@ -26,15 +34,12 @@
 	<div class="content-body">
 		<div class="welcome-area">
 			<div class="welcome-inner flex-column">
-				@if ($errors->any())
-					<div class="alert alert-danger">
-						<ul>
-							@foreach ($errors->all() as $error)
-								<li>{{ $error }}</li>
-							@endforeach
-						</ul>
-					</div>
-				@endif
+				<div class="logo-area">
+					<img class="logo" src="{{asset('assets')}}/images/logowhitenew.png" alt="">
+					<p class="para-title">Media Platform Ta'aruf Exlusive para Profesional dan Akademisi<br>
+						Ikhtiar menemukan Jodoh Sekufu untuk menuju Pernikahan</p>
+				</div>
+				
 				<div class="social-area">
 					<form action="{{route('front.createMember')}}" method="post">
 						@csrf

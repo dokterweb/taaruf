@@ -4,6 +4,12 @@
 	
 	<!-- Title -->
 	<title>Home List</title>
+	<!-- Meta -->
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, minimal-ui, viewport-fit=cover">
+	<meta name="theme-color" content="#FF50A2">
+	<meta name="robots" content="index, follow"> 
+	<meta name="format-detection" content="telephone=no">
 
 	<!-- Favicons Icon -->
 	<link rel="shortcut icon" type="image/x-icon" href="{{asset('assets')}}/images/favicon.png">
@@ -45,6 +51,13 @@
 				<div class="mid-content">
 				</div>
 				<div class="right-content">
+					<a href="{{ route('logout') }}" class="font-22"
+							onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+							<i class="fa-solid fa-right-from-bracket"></i>
+					</a>
+					<form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+						@csrf
+					</form>
 				</div>
 			</div>
 		</div>
@@ -54,6 +67,17 @@
 	<!-- Page Content Start -->
 	<div class="page-content space-top p-b60">
 		<div class="container py-0">
+
+			 {{-- Alert Error --}}
+			 @if(session('error'))
+			 <div class="alert alert-danger solid alert-dismissible fade show">
+				 <strong>Error!</strong> {{ session('error') }}
+				 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="btn-close">
+					 <span><i class="icon feather icon-x"></i></span>
+				 </button>
+			 </div>
+			 @endif
+
 			<div class="row">
 				@forelse ($pakets as $row)
 				<div class="col-md-6 col-12 mb-2">
@@ -154,7 +178,18 @@ document.querySelectorAll('.pay-btn').forEach(button => {
     });
 });
 
-
+ 	document.addEventListener("DOMContentLoaded", function() {
+        // Ambil semua alert yang bisa ditutup
+        const alerts = document.querySelectorAll('.alert-dismissible');
+        alerts.forEach(function(alert) {
+            // Setelah 5 detik (5000 ms), alert akan menghilang
+            setTimeout(function() {
+                alert.classList.remove('show'); // animasi fade
+                alert.classList.add('hide');
+                alert.style.display = 'none';
+            }, 5000);
+        });
+    });
 </script>
 	  
 </body>
