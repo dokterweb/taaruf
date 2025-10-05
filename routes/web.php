@@ -6,6 +6,7 @@ use App\Http\Controllers\FrontController;
 use App\Http\Controllers\OwnerController;
 use App\Http\Controllers\PaketController;
 use App\Http\Controllers\MemberController;
+use App\Http\Controllers\LaporanController;
 use App\Http\Controllers\HomelistController;
 use App\Http\Controllers\LikelistController;
 use App\Http\Controllers\DashboardController;
@@ -85,6 +86,9 @@ Route::middleware(['auth', 'verified', 'role:owner'])->group(function () {
     Route::get('member_pakets/{member_paket}/edit', [Member_paketController::class, 'edit'])->middleware('role:owner')->name('member_pakets.edit');
     Route::put('member_pakets/{member_paket}', [Member_paketController::class, 'update'])->middleware('role:owner')->name('member_pakets.update');
     Route::delete('member_pakets/{member_paket}', [Member_paketController::class, 'destroy'])->middleware('role:owner')->name('member_pakets.destroy');
+
+    Route::get('/laporan/penjualan', [LaporanController::class, 'penjualan'])->name('laporan.penjualan');
+
 
 });
 

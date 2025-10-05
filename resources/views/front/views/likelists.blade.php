@@ -114,7 +114,7 @@
 							<div class="media-content">
 								<div>
 									<h6 class="name">{{ $like->liker->user->name }}</h6>
-									<p class="last-msg">{{ $like->liker->user->member->no_hp }}</p>
+									<p class="last-msg">{{ $like->liker->user->member->tempat_tinggal }}</p>
 								</div>
 								<div class="right-content">
 									<span class="date">{{ \Carbon\Carbon::parse($like->created_at)->diffForHumans(null, true) }}</span>

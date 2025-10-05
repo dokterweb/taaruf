@@ -77,9 +77,9 @@
 			<div class="profile-area">
 				<div class="main-profile">
 					<div class="about-profile">
-						<a href="setting.html" class="setting dz-icon">
+						{{-- <a href="setting.html" class="setting dz-icon">
 							<i class="flaticon flaticon-setting"></i>
-						</a>
+						</a> --}}
 						<div class="media rounded-circle">
 							<img src="{{asset('assets')}}/images/user/pria.jpg" alt="profile-image">
 							<svg class="radial-progress m-b20" data-percentage="{{ $percentage }}" viewBox="0 0 80 80">
@@ -88,9 +88,9 @@
 							</svg>
 							<div class="data-fill style-2"><span>{{ $percentage }}% Complete</span></div>
 						</div>
-						<a href="edit-profile.html" class="edit-profile dz-icon">
+						{{-- <a href="edit-profile.html" class="edit-profile dz-icon">
 							<i class="flaticon flaticon-pencil-2"></i>
-						</a>
+						</a> --}}
 					</div>
 					<div class="profile-detail">
 						<h4 class="name">{{ $user->name }}{{ $age ? ', ' . $age : '' }}</h4>

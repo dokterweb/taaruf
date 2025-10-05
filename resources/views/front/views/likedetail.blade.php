@@ -46,7 +46,7 @@
 			<div class="container">
 				<div class="header-content">
 					<div class="left-content">
-						<a href="javascript:void(0);" class="back-btn">
+						<a href="{{route('front.likelist')}}" class="back-btn">
 							<i class="icon feather icon-arrow-left"></i>
 						</a>
 						<h6 class="title">Back</h6>
@@ -79,24 +79,50 @@
 				<div class="detail-bottom-area">
 					<div class="about">
 						<h6 class="title">Basic information</h6>
-						<p class="para-text">Just moved back to jakarata after living at India for 10+ years. Di luar terlifiat cenger - center di dalam.</p>					
-					</div>
-					<div class="intrests mb-3">
-						<h6 class="title">Intrests</h6>
-						<ul class="dz-tag-list">
-							<li> 
-								<div class="dz-tag">
-									<i class="icon feather icon-camera"></i>
-									<span>Photography</span>
-								</div>
-							</li>
-							<li> 
-								<div class="dz-tag">
-									<i class="icon feather icon-music"></i>
-									<span>Music</span>
-								</div>
-							</li>
-						</ul>
+						<table class="table">
+							<tbody>
+								<tr>
+								<th scope="row">Tempat Lahir</th>
+								<td>:</td>
+								<td>{{ $member->tempat_lahir }}</td>
+								</tr>
+								<tr>
+								<th scope="row">Tanggal Lahir</th>
+								<td>:</td>
+								<td>{{ $member->tanggal_lahir }}</td>
+								</tr>
+								<tr>
+								<th scope="row">No HP</th>
+								<td>:</td>
+								<td>{{ $member->no_hp }}</td>
+								</tr>
+								<tr>
+								<th scope="row">Tempat Tinggal</th>
+								<td>:</td>
+								<td>{{ $member->tempat_tinggal }}</td>
+								</tr>
+								<tr>
+								<th scope="row">Pendidikan</th>
+								<td>:</td>
+								<td>{{ $member->pendidikan }}</td>
+								</tr>
+								<tr>
+								<th scope="row">Karakter</th>
+								<td>:</td>
+								<td>{{ $member->karakter }}</td>
+								</tr>
+								<tr>
+								<th scope="row">Karakter Pasangan</th>
+								<td>:</td>
+								<td>{{ $member->karakter_pasangan }}</td>
+								</tr>
+								<tr>
+								<th scope="row">Hafalan Surat</th>
+								<td>:</td>
+								<td>{{ $member->hafalan_surat}}</td>
+								</tr>
+							</tbody>
+						</table>
 					</div>
 				</div>
 			</div>

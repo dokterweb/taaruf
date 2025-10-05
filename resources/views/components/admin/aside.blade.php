@@ -69,6 +69,12 @@
               <p>Order Paket</p>
             </a>
           </li>
+          <li class="nav-item">
+            <a href="{{route('laporan.penjualan')}}" class="nav-link {{request()->routeIs('laporan.penjualan')?'active':''}}">
+              <i class="fas fa-gift"></i>
+              <p>Laporan</p>
+            </a>
+          </li>
         </ul>
       </nav>
       <!-- /.sidebar-menu -->
