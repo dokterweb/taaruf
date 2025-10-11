@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Auth;
 
 class LikelistController extends Controller
 {
-   public function index()
+  /*   public function index()
     {
         // Mendapatkan member yang login
         $me = Auth::user()->member;
@@ -28,7 +28,7 @@ class LikelistController extends Controller
 
         // Mengirim data matches dan likes ke view
         return view('front.views.likelists', compact('matches', 'likes'));
-    }
+    } */
 
 /*     public function likedetail($id)
     {
@@ -37,7 +37,33 @@ class LikelistController extends Controller
 
         // Mengirim data member ke blade
         return view('front.views.likedetail', compact('member'));
-    } */
+    } 
+*/
+
+    public function index()
+{
+    // Mendapatkan member yang login
+    $me = Auth::user()->member;
+
+    // Mengambil data Matches (saling like)
+    $matches = $me->matches()
+        ->orWhere('member_one_id', $me->id)
+        ->orWhere('member_two_id', $me->id)
+        ->get();
+
+    // Mengambil data Likes (yang memberikan like)
+    $likes = $me->likesReceived()->where('status', 'liked')->get();
+
+    // Menghilangkan likes yang sudah ada di matches
+    $likedMemberIds = $matches->pluck('member_one_id')->merge($matches->pluck('member_two_id'))->unique();
+    $likes = $likes->filter(function ($like) use ($likedMemberIds) {
+        return !$likedMemberIds->contains($like->liker_member_id);
+    });
+
+    // Mengirim data matches dan likes ke view
+    return view('front.views.likelists', compact('matches', 'likes'));
+}
+
 
     public function dislike_detail($id)
     {

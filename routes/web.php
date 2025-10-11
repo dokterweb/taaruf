@@ -9,6 +9,7 @@ use App\Http\Controllers\MemberController;
 use App\Http\Controllers\LaporanController;
 use App\Http\Controllers\HomelistController;
 use App\Http\Controllers\LikelistController;
+use App\Http\Controllers\WishlistController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Member_paketController;
@@ -72,6 +73,9 @@ Route::middleware(['auth', 'verified', 'role:member'])->group(function () {
     Route::get('/likelist', [LikelistController::class, 'index'])->name('front.likelist');
     Route::get('/likedetail/{id}', [LikelistController::class, 'likedetail'])->name('front.likedetail');
     Route::post('/dislike_detail/{id}', [LikelistController::class, 'dislike_detail'])->name('like.dislike_detail');
+
+    Route::get('/wishlist', [WishlistController::class, 'index'])->name('front.wishlist');
+    Route::get('/wishlistex', [WishlistController::class, 'wishlistex'])->name('front.wishlistex');
 
 });
 

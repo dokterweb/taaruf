@@ -21,11 +21,39 @@ use Illuminate\Auth\Events\Registered;
 
 class FrontController extends Controller
 {
-    public function index()
+    /* public function index()
     {
         $pakets = Paket::all();
         return view('front.views.index',compact('pakets'));
+    } */
+    public function index(Request $request)
+    {
+        $me = Auth::user()->member;  // Ambil data member yang login
+        $pakets = Paket::all();
+        // Cek apakah member memiliki paket aktif
+        $hasPackage = Member_paket::query()
+            ->where('member_id', $me->id)
+            ->where('status', 'paid')
+            ->whereDate('tanggalmulai', '<=', now())
+            ->whereDate('tanggalakhir', '>=', now())
+            ->exists();  // Jika member punya paket aktif
+
+        // Jika belum membeli paket, kirim flash message
+    /*     if (!$hasPackage) {
+            session()->flash('message', 'Anda harus membeli paket sebelum melihat profile member');
+            session()->flash('message_type', 'info'); // Bisa gunakan 'info', 'success', 'danger', etc.
+        } */
+
+          // Periksa jika datang dari wishlist (via parameter)
+        if ($request->has('from_wishlist') && !$hasPackage) {
+            // Kirim flash message hanya jika member belum membeli paket
+            session()->flash('message', 'Anda harus membeli paket sebelum melihat profile member');
+            session()->flash('message_type', 'info');
+        }
+        
+        return view('front.views.index',compact('pakets'));
     }
+
 
     public function register()
     {

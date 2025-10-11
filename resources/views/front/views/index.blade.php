@@ -68,6 +68,15 @@
 	<div class="page-content space-top p-b60">
 		<div class="container py-0">
 
+			@if (session('message'))
+				<div class="alert alert-info solid alert-dismissible fade show">
+				<strong>Info!</strong> {{ session('message') }}
+				<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="btn-close">
+					<span><i class="icon feather icon-x"></i></span>
+				</button>
+				</div>
+			@endif
+
 			 {{-- Alert Error --}}
 			 @if(session('error'))
 			 <div class="alert alert-danger solid alert-dismissible fade show">
@@ -119,7 +128,7 @@
 			<a href="{{route('front.home')}}" class="nav-link">
 				<i class="flaticon flaticon-magnifying-glass"></i>
 			</a>
-			<a href="wishlist.html" class="nav-link">
+			<a href="{{route('front.wishlist')}}" class="nav-link">
 				<i class="flaticon flaticon-sparkle"></i>
 			</a>
 			<a href="{{route('front.likelist')}}" class="nav-link">

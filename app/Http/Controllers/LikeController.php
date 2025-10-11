@@ -14,53 +14,50 @@ use App\Notifications\NewMatch;
 
 class LikeController extends Controller
 {
-    // Handle like action
     public function like($id)
     {
-        $me = Auth::user()->member; // Member yang sedang login
-        $target = Member::findOrFail($id); // Target member yang di-like
-
-        // Pastikan tidak bisa like diri sendiri
+        $me = Auth::user()->member;
+        $target = Member::findOrFail($id);
+    
         if ($me->id === $target->id) {
             return back()->with('error', 'Tidak bisa menyukai diri sendiri!');
         }
-
-        // Simpan like ke dalam tabel
-        DB::transaction(function () use ($me, $target) {
-            // Menyimpan like dari A ke B (liker_member_id adalah yang memberi like, liked_member_id adalah yang di-like)
+    
+        $isMatch = false; // <<< Flag
+    
+        DB::transaction(function () use ($me, $target, &$isMatch) {
             Like::updateOrCreate(
                 ['liker_member_id' => $me->id, 'liked_member_id' => $target->id],
                 ['status' => 'liked']
             );
-
-            // Cek apakah B sudah like A (mutual)
+    
             $reciprocalLike = Like::where('liker_member_id', $target->id)
                 ->where('liked_member_id', $me->id)
                 ->where('status', 'liked')
                 ->exists();
-
+    
             if ($reciprocalLike) {
-                // Jika mutual like, buat match
                 $this->createMatch($me, $target);
-
-                // Kirim notifikasi match ke kedua member
                 Notification::send([$me->user, $target->user], new NewMatch($me, $target));
-                return back()->with([
-                    'success' => 'Match berhasil!',
-                    'matched_name' => $target->user->name
-                ]);
+                $isMatch = true; // <<< Tandai match
             } else {
-                // Kirim notifikasi ke target "You got a like"
                 $target->user->notify(new GotLiked($me));
             }
         });
-
+    
+        // Return berdasarkan hasil
+        if ($isMatch) {
+            return back()->with([
+                'matched_name' => $target->user->name
+            ]);
+        }
+    
+        // Hanya like saja
         return back()->with([
-            'success' => 'Like terkirim!',
             'liked_name' => $target->user->name
         ]);
-        // return back()->with('success', 'Like terkirim!');
     }
+    
 
     // Handle dislike action
     public function dislike($id)
@@ -88,11 +85,15 @@ class LikeController extends Controller
                   ->where('member_two_id', $me->id);
         })->delete();
 
-        return back()->with('success', 'Dislike terkirim!');
+        // return back()->with('success', 'Dislike terkirim!');
+        return back()->with([
+            'disliked_name' => $target->user->name,
+        ]);
+        
     }
 
     // Membuat match jika dua member sudah saling like
-    private function createMatch(Member $me, Member $target)
+/*     private function createMatch(Member $me, Member $target)
     {
         // Tentukan urutan member supaya match tetap unik
         $memberOne = $me->id < $target->id ? $me->id : $target->id;
@@ -103,5 +104,32 @@ class LikeController extends Controller
             'member_one_id' => $memberOne,
             'member_two_id' => $memberTwo,
         ]);
+    } */
+
+    private function createMatch(Member $me, Member $target)
+    {
+        // Pastikan kedua member sudah saling like
+        $isLikedByTarget = Like::where('liker_member_id', $target->id)
+                            ->where('liked_member_id', $me->id)
+                            ->where('status', 'liked')
+                            ->exists(); // Mengecek apakah target menyukai member ini
+
+        $isLikedByMe = Like::where('liker_member_id', $me->id)
+                            ->where('liked_member_id', $target->id)
+                            ->where('status', 'liked')
+                            ->exists(); // Mengecek apakah member ini menyukai target
+
+        if ($isLikedByMe && $isLikedByTarget) {
+            // Tentukan urutan member supaya match tetap unik
+            $memberOne = $me->id < $target->id ? $me->id : $target->id;
+            $memberTwo = $me->id < $target->id ? $target->id : $me->id;
+
+            // Simpan match ke database jika kedua member saling suka
+            MatchModel::firstOrCreate([
+                'member_one_id' => $memberOne,
+                'member_two_id' => $memberTwo,
+            ]);
+        }
     }
+
 }

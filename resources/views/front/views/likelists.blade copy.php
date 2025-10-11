@@ -84,25 +84,19 @@
 			<div class="swiper chat-swiper">
 				<div class="swiper-wrapper">
 					@forelse($matches as $match)
-						@php
-							$meId = Auth::user()->member->id;
-							$matchedUser = $match->member_one_id == $meId ? $match->memberTwo : $match->memberOne;
-						@endphp
-
-						<div class="swiper-slide">
-							<a href="{{ route('front.likedetail', $matchedUser->id) }}" class="recent">
-								<div class="media media-60 rounded-circle">
-									<img src="{{ asset($matchedUser->user->avatar) }}" alt="avatar">
-								</div>
-								<span>{{ $matchedUser->user->name }}</span>
-							</a>
-						</div>
-					@empty
-						<div class="swiper-slide">
-							<h3>No Matches</h3>
-						</div>
-					@endforelse
-
+                    <div class="swiper-slide">
+                        <a href="{{ route('front.likedetail', $match->memberTwo->id) }}" class="recent">
+                            <div class="media media-60 rounded-circle">
+                                <img src="{{ asset($match->memberTwo->user->avatar) }}" alt="avatar">
+                            </div>
+                            <span>{{ $match->memberTwo->user->name }}</span>
+                        </a>
+                    </div>
+                @empty
+                    <div class="swiper-slide">
+                        <h3>No Matches</h3>
+                    </div>
+                @endforelse
 				</div>
 				
 			</div>

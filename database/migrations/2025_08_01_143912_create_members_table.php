@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('no_hp');
             $table->string('tempat_tinggal')->nullable();
             $table->string('pendidikan')->nullable();
+            $table->string('email_kedua');
             $table->string('karakter')->nullable();
             $table->string('karakter_pasangan')->nullable();
             $table->string('hafalan_surat')->nullable();

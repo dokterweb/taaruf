@@ -13,8 +13,11 @@ class Paket extends Model
     
     public function members()
     {
-        return $this->belongsToMany(Member::class, 'member_pakets', 'paket_id', 'member_id')
+      /*   return $this->belongsToMany(Member::class, 'member_pakets', 'paket_id', 'member_id')
                     ->withPivot('status')
+                    ->withTimestamps(); */
+        return $this->belongsToMany(Member::class, 'member_pakets', 'paket_id', 'member_id')
+                    ->withPivot(['status', 'tanggalmulai', 'tanggalakhir'])
                     ->withTimestamps();
     }
 }

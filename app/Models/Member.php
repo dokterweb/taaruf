@@ -11,7 +11,7 @@ class Member extends Model
     use HasFactory, SoftDeletes;
     protected $table = 'members';  // Pastikan tabelnya benar
     
-    protected $fillable=['user_id', 'tempat_lahir', 'tanggal_lahir', 'kelamin', 'no_hp', 'tempat_tinggal', 'pendidikan', 'karakter', 'karakter_pasangan', 'hafalan_surat', 'is_active'];
+    protected $fillable=['user_id', 'tempat_lahir', 'tanggal_lahir', 'kelamin', 'no_hp', 'tempat_tinggal', 'pendidikan', 'email_kedua','karakter', 'karakter_pasangan', 'hafalan_surat', 'is_active'];
 
     public function user()
     {

@@ -68,7 +68,10 @@
 									<input type="date" name="tanggal_lahir" class="form-control">
 								</div>
 								<div class="mb-2">
-									<input type="email" name="email" class="form-control" placeholder="Enter Email">
+									<input type="email" name="email" class="form-control" placeholder="Email Utama">
+								</div>
+								<div class="mb-2">
+									<input type="email" name="email_kedua" class="form-control" placeholder="Email Kedua">
 								</div>
 								<div class="mb-2 input-group input-group-icon">
 									<input type="password" name="password" id="password" class="form-control dz-password" placeholder="Type Password Here">

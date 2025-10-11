@@ -29,34 +29,59 @@
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:opsz,wght@6..12,200;6..12,300;6..12,400;6..12,500;6..12,600;6..12,700;6..12,800;6..12,900;6..12,1000&family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-<style>
-	.dz-content {
-    position: relative; /* supaya anaknya bisa absolute */
-}
+	<style>
+		.dz-content {
+		position: relative; /* supaya anaknya bisa absolute */
+	}
 
-.dz-content .dz-icon-box {
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%); /* ini bikin rata tengah horizontal */
-    bottom: 60px; /* geser naik: makin besar nilainya, makin ke atas */
-    display: flex;
-    gap: 20px; /* jarak antar tombol */
-    z-index: 20;
-}
+	.dz-content .dz-icon-box {
+		position: absolute;
+		left: 50%;
+		transform: translateX(-50%); /* ini bikin rata tengah horizontal */
+		bottom: 100px; /* geser naik: makin besar nilainya, makin ke atas */
+		display: flex;
+		gap: 20px; /* jarak antar tombol */
+		z-index: 20;
+	}
 
-.dz-content .dz-icon-box .icon {
-    background: #fff;
-    border-radius: 50%;
-    width: 55px;
-    height: 55px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
-    font-size: 22px;
-    color: #333;
-}
-</style>
+	.dz-icon-box .super-like{
+		width:65px !important;     /* ubah sesuai selera: 64–80px */
+		height:65px !important;
+		border-radius: 50%;
+		display: inline-flex;       /* pastikan konten di tengah */
+		align-items: center;
+		justify-content: center;
+	}
+	
+	.dz-content .dz-icon-box .icon {
+		background: #fff;
+		border-radius: 50%;
+		width: 55px;
+		height: 55px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+		font-size: 22px;
+		color: #333;
+	}
+	 /* Besarkan hanya ikon tengah (tanpa mengubah lingkaran tombol) */
+	 .dz-icon-box .super-like .icon-people-only {
+		font-size: 28px;      /* sesuaikan angka ini */
+		line-height: 1;
+	}
+	@media (min-width: 768px){
+		.dz-icon-box .super-like .icon-people-only { font-size: 32px; }
+	}
+	.alert {
+		position: absolute;
+		top: 20px;
+		left: 50%;
+		transform: translateX(-50%);
+		z-index: 9999;
+	}
+
+	</style>
 </head>   
 <body class="bg-white overflow-hidden header-large" data-theme-color="color-primary-2">
 <div class="page-wrapper">
@@ -119,7 +144,9 @@
 						<line x1="12" y1="16" x2="12" y2="12"></line>
 						<line x1="12" y1="8" x2="12.01" y2="8"></line>
 					</svg>
-					<strong>Info!</strong> Anda sudah like <strong>{{ session('liked_name') }}</strong>
+					<strong>Info!</strong> Baarakallahu fiik...<br>
+					Kamu baru saja menyukai dan menyatakan ketertarikan kepada beliau dan berniat untuk bertaaruf dengan beliau. Semoga Allah Subhanahu wa Ta‘ala memudahkan setiap niat baik dan tujuan muliamu.
+					<strong>{{ session('liked_name') }}</strong>
 					<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="btn-close">
 						<span><i class="icon feather icon-x"></i></span>
 					</button>
@@ -166,8 +193,12 @@
 									<i class="flaticon flaticon-cross font-18"></i>
 								</button>
 							</form>
-							<a href="home.html" class="icon dz-flex-box super-like"><i class="fa-solid fa-star"></i></a>
-							{{-- <a href="wishlist.html" class="icon dz-flex-box like"><i class="fa-solid fa-heart"></i></a> --}}
+							
+							<a href="{{ route('front.likedetail', $m->id) }}" 
+								class="icon dz-flex-box super-like" aria-label="Lihat detail">
+								<i class="fa-solid fa-user icon-people-only"></i>
+							</a>
+							
 							<form action="{{ route('like.like', $m->id) }}" method="POST" class="d-inline">
 								@csrf
 								<button type="submit" class="icon dz-flex-box like">
@@ -197,19 +228,19 @@
 	<!-- Menubar -->
 	<div class="menubar-area style-3 footer-fixed">
 		<div class="toolbar-inner menubar-nav">
-			<a href="{{route('front.homelist')}}" class="nav-link">
+			<a href="{{route('front.homelist')}}" class="nav-link active">
 				<i class="fa-solid fa-house"></i>
 			</a>
 			<a href="{{route('front.home')}}" class="nav-link">
 				<i class="flaticon flaticon-magnifying-glass"></i>
 			</a>
-			<a href="wishlist.html" class="nav-link">
+			<a href="{{route('front.wishlist')}}" class="nav-link">
 				<i class="flaticon flaticon-sparkle"></i>
 			</a>
 			<a href="{{route('front.likelist')}}" class="nav-link">
 				<i class="flaticon flaticon-chat-2"></i>
 			</a>
-			<a href="{{route('front.profile')}}" class="nav-link active">
+			<a href="{{route('front.profile')}}" class="nav-link">
 				<i class="fa-solid fa-user"></i>
 			</a>
 		</div>
@@ -236,7 +267,7 @@
 		document.querySelectorAll('.alert-dismissible').forEach(el => {
 			el.style.transition = 'opacity 0.5s ease';
 			el.style.opacity = '0';
-			setTimeout(() => el.remove(), 500);
+			setTimeout(() => el.remove(), 3000);
 		});
 	}, 5000);
 </script>

@@ -35,7 +35,7 @@
 		<div class="welcome-area">
 			<div class="welcome-inner flex-column">
 				<div class="logo-area">
-					<img class="logo" src="{{asset('assets')}}/images/logowhitenew.png" alt="">
+					<img class="logo" src="{{asset('assets')}}/images/logowhitenew.png" alt=""><br><br>
 					<h4 class="para-title">Media Platform Ta'aruf Exlusive para Profesional dan Akademisi<br>
 						Ikhtiar menemukan Jodoh Sekufu untuk menuju Pernikahan<br><br>
 					An Exclusive Ta'aruf Media Platform for Professionals and Academics<br>

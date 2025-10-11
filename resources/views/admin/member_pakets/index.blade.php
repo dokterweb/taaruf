@@ -24,6 +24,8 @@
                         <th>Nama Member</th>
                         <th>Paket</th>
                         <th>Durasi</th>
+                        <th>Tanggal Mulai</th>
+                        <th>Tanggal Akhir</th>
                         <th>Status</th>
                         <th>Action</th>
                     </tr>
@@ -34,7 +36,9 @@
                         <td>{{$loop->iteration}}</td>
                         <td>{{$row->member->user->name}} </td>
                         <td>{{$row->paket->nama_paket}} </td>
-                        <td>{{$row->paket->durasi}} </td>
+                        <td>{{$row->paket->durasi}} bulan</td>
+                        <td>{{ \Carbon\Carbon::parse($row->tanggalmulai)->format('d-m-Y') }}</td>
+                        <td>{{ \Carbon\Carbon::parse($row->tanggalakhir)->format('d-m-Y') }}</td>
                         <td>{{$row->status}} </td>
                         <td class="d-flex align-items-center" style="gap: 5px;">
                             <a href="{{route('member_pakets.edit',$row->id)}}" class="btn btn-sm btn-info"><i class="far fa-edit"></i></a>

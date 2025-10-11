@@ -28,15 +28,7 @@
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:opsz,wght@6..12,200;6..12,300;6..12,400;6..12,500;6..12,600;6..12,700;6..12,800;6..12,900;6..12,1000&family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-	<style>
-		.alert {
-			position: absolute;
-			top: 20px;
-			left: 50%;
-			transform: translateX(-50%);
-			z-index: 9999;
-		}
-	</style>
+
 </head>   
 <body class="bg-white" data-theme-color="color-primary-2">
 <div class="page-wrapper">
@@ -54,17 +46,14 @@
 			<div class="container">
 				<div class="header-content">
 					<div class="left-content">
-						{{-- <a href="{{route('front.likelist')}}" class="back-btn">
+						<a href="{{route('front.likelist')}}" class="back-btn">
 							<i class="icon feather icon-arrow-left"></i>
 						</a>
-						<h6 class="title">Back</h6> --}}
+						<h6 class="title">Back</h6>
 					</div>
 					<div class="mid-content header-logo">
 					</div>
 					<div class="right-content dz-meta">
-						<a href="{{route('front.homelist')}}" class="font-22">
-							<i class="fa-solid fa-house"></i>
-						</a>
 					</div>
 				</div>
 			</div>
@@ -73,75 +62,8 @@
 	
 	<!-- Page Content Start -->
 	<div class="page-content space-top p-b40">
-		<div class="container fixed-full-area">
-
+		<div class="container">
 			<div class="detail-area">
-
-				@if(session('matched_name'))
-					<div class="alert alert-success solid alert-dismissible fade show">
-						<svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="me-2">
-							<circle cx="12" cy="12" r="10"></circle>
-							<path d="M16 12l-4-4-4 4"></path>
-						</svg>
-						<strong>Alhamdulillah....</strong> Anda dan <strong>{{ session('matched_name') }}</strong> saling menyukai. Kalian telah <strong>Match!</strong><br>
-						Kamu berdua telah saling menyukai serta menyatakan ketertarikan dan bersedia untuk memulai proses ta’aruf. Semoga Allah Subhanahu wa Ta‘ala memberkahi langkah kalian dan menuntun menuju pernikahan yang sakinah, mawaddah, wa rahmah. Baarakallahu fiikum.
-
-Silakan klik ikon WhatsApp yang terdapat pada profil beliau untuk memulai komunikasi lebih lanjut.
-
-
-Panduan Berkomunikasi:
-Berkomunikasilah dengan cara yang baik, santun, dan berakhlak mulia sesuai dengan adab dan ketentuan syariat Islam. Dilarang melakukan khalwat (berduaan tanpa mahram) atau bentuk maksiat lainnya. Tujuan utama komunikasi ini adalah untuk ta’aruf, saling mengenal secara terhormat, dan menapaki jalan menuju pernikahan yang diridhai oleh Allah Subhanahu wa Ta‘ala.
-
-
-Segala bentuk pelanggaran terhadap panduan dan prosedur yang telah ditetapkan menjadi tanggung jawab pribadi masing-masing peserta. Platform Taarufe.com hanya berperan sebagai media penghubung dan tidak bertanggung jawab atas tindakan di luar ketentuan yang berlaku. 
-
-
-Setiap sikap, tindakan, dan perbuatan peserta sepenuhnya menjadi tanggung jawab individu masing-masing, baik di hadapan Allah Subhanahu wa Ta‘ala maupun di hadapan Sosial Masyarakat. Keamanan diri dan kenyamanan dalam berinteraksi dengan pihak lain merupakan tanggung jawab pribadi masing-masing peserta.
-
-
-Semoga komunikasi yang terjalin dapat berlangsung dengan baik, sesuai dengan tuntunan syariat Islam, dan menjadi jalan menuju pernikahan yang sakinah, mawaddah, wa rahmah
-						<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="btn-close">
-							<span><i class="icon feather icon-x"></i></span>
-						</button>
-					</div>
-				
-				@elseif(session('liked_name'))
-					<div class="alert alert-info solid alert-dismissible fade show">
-						<svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="me-2">
-							<circle cx="12" cy="12" r="10"></circle>
-							<line x1="12" y1="16" x2="12" y2="12"></line>
-							<line x1="12" y1="8" x2="12.01" y2="8"></line>
-						</svg>
-						<strong>Info!</strong> Baarakallahu fiik...<br>
-						Kamu baru saja menyukai dan menyatakan ketertarikan kepada beliau dan berniat untuk bertaaruf dengan beliau. Semoga Allah Subhanahu wa Ta‘ala memudahkan setiap niat baik dan tujuan muliamu.
-
-	Tanda ketertarikanmu insyaa Allah akan sampai kepada beliau. Apabila beliau juga menyukai dan memiliki ketertarikan yang sama, maka insyaa Allah kamu berdua akan dapat saling terhubung dan berkomunikasi lebih lanjut.
-
-	Namun, apabila beliau tidak menyukai balik dan belum memiliki ketertarikan yang sama, maka proses keterhubungan tidak dapat dilanjutkan. Jangan berkecil hati, tetaplah berikhtiar dan berdoa agar Allah mempertemukanmu dengan jodoh terbaik
-						<strong>{{ session('liked_name') }}</strong>
-						<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="btn-close">
-							<span><i class="icon feather icon-x"></i></span>
-						</button>
-					</div>
-				@elseif(session('disliked_name'))
-					{{-- Notifikasi DISLIKE --}}
-					<div class="alert alert-warning solid alert-dismissible fade show">
-						<strong>Perhatian!</strong> Anda telah memutus ketertarikan terhadap <strong>{{ session('disliked_name') }}</strong>.
-						<br>Match yang sudah ada (jika ada) juga telah dihapus.
-						<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="btn-close">
-							<span><i class="icon feather icon-x"></i></span>
-						</button>
-					</div>
-				
-				@elseif(session('error'))
-					{{-- Notifikasi ERROR --}}
-					<div class="alert alert-danger solid alert-dismissible fade show">
-						<strong>Oops!</strong> {{ session('error') }}
-						<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="btn-close">
-							<span><i class="icon feather icon-x"></i></span>
-						</button>
-					</div>
-				@endif
 				<div class="dz-media-card style-2">
 					<div class="dz-media">
 						<img src="{{ asset($member->user->avatar) }}" alt="avatar">
@@ -170,14 +92,43 @@ Semoga komunikasi yang terjalin dapat berlangsung dengan baik, sesuai dengan tun
 								<td>{{ $member->tanggal_lahir }}</td>
 								</tr>
 								<tr>
-								<th scope="row">Email</th>
+								<th scope="row">No HP</th>
 								<td>:</td>
+								
 								<td>
+									{{-- tampilkan nomor apa adanya --}}
+									{{-- {{ $member->no_hp }} --}}
+								  
 									@if ($alreadyMatched)
-										{{$member->email_kedua}}
+										@php
+											// Normalisasi ke format wa.me (Indonesia = 62, tanpa + dan tanpa spasi)
+											$raw = preg_replace('/\D+/', '', $member->no_hp ?? '');
+											if ($raw) {
+												if (substr($raw,0,2)==='62') {
+													$phone = $raw;
+												} elseif (substr($raw,0,1)==='0') {
+													$phone = '62'.substr($raw,1);
+												} elseif (substr($raw,0,1)==='8') {
+													$phone = '62'.$raw;
+												} else {
+													$phone = $raw; // fallback
+												}
+												$text  = rawurlencode('Assalamualaikum, saya tertarik berkenalan via Taaruf Land.');
+												$waUrl = "https://wa.me/{$phone}?text={$text}";
+											}
+										@endphp
+								  
+										@if (!empty($raw))
+											<a href="{{ $waUrl }}" target="_blank" rel="noopener"
+											   class="btn mb-2 me-2 btn-sm btn-success">
+												<i class="fa-brands fa-whatsapp"></i> Whatsapp
+											</a>
+										@else
+											<small class="text-muted d-block">Nomor WhatsApp tidak tersedia.</small>
+										@endif
 									@else
 										<small class="text-muted d-block">
-										  Email muncul jika di antara kalian berdua saling like
+										  whatsapp muncul jika di antara kalian berdua saling like
 										</small>
 									@endif
 								  </td>
@@ -219,7 +170,7 @@ Semoga komunikasi yang terjalin dapat berlangsung dengan baik, sesuai dengan tun
 	<!-- Menubar -->
 	<div class="footer fixed">
 		<div class="dz-icon-box">
-            <form action="{{ route('like.dislike', $member->user->member->id) }}" method="POST" class="d-inline">
+            <form action="{{ route('like.dislike_detail', $member->user->member->id) }}" method="POST" class="d-inline">
 				@csrf
 				<button type="submit" class="icon dz-flex-box dislike">
 					<i class="flaticon flaticon-cross font-18"></i>
